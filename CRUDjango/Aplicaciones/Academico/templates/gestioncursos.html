@@ -1,0 +1,87 @@
+{% extends "./base.html" %}
+
+{% block title %} Ingenieria de Software {% endblock %}
+{% block body %}
+ <div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+        <h1>Asignar Cursos</h1>
+        <div class="card">
+            <div class="card-body">
+                <form action="/registrarCurso/" method="POST">{% csrf_token %}
+                    <div class="form-group">
+                        <input type="text" id="txtCodigo" name="txtCodigo" class="form-control" placeholder="Codigo" minlength="5" maxlength="5" required>
+                        <br>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="txtNombre" name="txtNombre" class="form-control" placeholder="Nombre"  maxlength="50" required>
+                        <br>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="txtApellido" name="txtApellido" class="form-control" placeholder="Apellido" required>
+                        <br>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="txtEmail" name="txtEmail" class="form-control" placeholder="E-mail"  required>
+                        <br>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="txtFechaNacimiento" name="txtfechaNacimiento" class="form-control" placeholder="fecha Nacimiento"  required>
+                        <br>
+                    </div>
+                   
+                    <div class="form-group"><br>
+                        <button type="submit" class="btn btn-success btn-block text-white">Asignar</button>
+                       
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+        <div class="table-responsive py-2">
+            <h1>Mis Cursos</h1>
+            <table class="table table-striped ">
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>IdCurso</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>E-mail</th>
+                        <th>fecha Nacimiento</th>
+                        <!--<th>Creditos</th>-->
+                        <th colspan="2">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in cursos %}
+                    <tr>
+                      <td>{{forloop.counter}}</td>
+                      <td>{{c.codigo}}</td>
+                      <td>{{c.nombre}}</td>
+                      <td>{{c.apellido}}</td>
+                      <td>{{c.email}}</td>
+                      <td>{{c.fechaNacimiento}}</td>
+                      <!--<td>{{c.creditos}}</td>-->
+                      <td><a href="edicionCurso/{{c.codigo}}" class="btn btn-info">Editar</a></td>
+                      <td><a href="eliminarCurso/{{c.codigo}}" class="btn btn-danger btnEliminacion">Eliminar</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            {% if messages %}
+        {% for message in messages %}
+        <div id="alert" class="alert alert-dismissible alert-success">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong class="tex-dark">{{ message }}</strong>
+        </div>
+        {% endfor %}
+        {% endif %}
+
+        </div>      
+    </div>
+
+ </div>
+{% endblock%}
